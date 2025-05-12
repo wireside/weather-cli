@@ -2,7 +2,34 @@ import axios from 'axios';
 import https from 'https';
 import { getKeyValue, STORAGE_KEYS } from './storage.service.js';
 
+const getIcon = (icon) => {
+	switch (icon.slice(0, -1)) {
+		case '01':
+			return '☀️';
+		case '02':
+			return '🌤️';
+		case '03':
+			return '☁️';
+		case '04':
+			return '☁️';
+		case '09':
+			return '🌧️';
+		case '10':
+			return '🌦️';
+		case '11':
+			return '🌩️';
+		case '13':
+			return '❄️';
+		case '50':
+			return '🌫️';
+	}
+};
+
 const getWeather = async (city) => {
+	if (!city) {
+		throw new Error('Неверно передан город');
+	}
+	
 	const token = process.env.WEATHER_APP_TOKEN ?? await getKeyValue(STORAGE_KEYS.token);
 	
 	if (!token) {
@@ -19,8 +46,8 @@ const getWeather = async (city) => {
 			units: 'metric',
 		},
 	});
-	console.log(data);
+	
 	return data;
 };
 
-export { getWeather }
+export { getWeather, getIcon };
