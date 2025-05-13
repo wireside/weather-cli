@@ -50,6 +50,8 @@ const getForcast = async () => {
 				printError('Неверно указан город');
 			} else if (e.response.status === 401) {
 				printError('Неверно указан токен');
+			} else {
+				printError(`Ошибка API: ${e.message}`);
 			}
 		} else {
 			printError(e.message);
